@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { hiragana, katakana } from '../kana';
+import { hiragana, katakana } from '../data/kana';
 
 function App()
 {
@@ -23,8 +23,8 @@ function App()
       }
     }
 
-    if (['a', 'e', 'i', 'o', 'u'].includes(value.charAt(value.length - 1)) ||
-        value.length === 3)
+    if (value.length === 3 ||
+        ['a', 'e', 'i', 'o', 'u'].includes(value.charAt(value.length - 1)))
     {
       if (checkAnswer(kana, value))
         getNewKana();
@@ -32,7 +32,7 @@ function App()
       return;
     }
 
-    setAnswer(value);
+    setAnswer(value.toLowerCase().trim());
   };
   
   useEffect(() => 
@@ -71,8 +71,8 @@ function getRandomKana()
 function checkAnswer(prompt, answer)
 {
   const kana = {...hiragana, ...katakana};
-  const answers = kana[prompt];
-  return answers.includes(answer);
+  const pronunciation = kana[prompt];
+  return (answer === pronunciation);
 }
 
 export default App;
