@@ -3,84 +3,61 @@ import { hiragana, katakana } from '../kana';
 
 function App()
 {
+  const inputRef = useRef(null);
+  const focusInput = () => inputRef.current.focus();
+
   const [kana, setKana] = useState(getRandomKana());
   const getNewKana = () => setKana(getRandomKana());
 
   const [answer, setAnswer] = useState('');
   const resetAnswer = () => setAnswer('');
-
-  const inputRef = useRef(null);
-  const focusInput = () => inputRef.current.focus();
-  const supressInput = (event) => event.preventDefault();
-
-  useEffect(() => 
+  const checkInput = (value) => 
   {
-    const handleKeyPress = (event) =>
+    if (value === 'n')
     {
-      const pressed = event.key.toLowerCase();
-
-      if (pressed === 'backspace')
+      if(checkAnswer(kana, value))
       {
-        if (answer.length === 0)
-          return;
-
-        setAnswer(answer.substring(0, answer.length - 1));
-        return;
-      }
-
-      if (pressed.length != 1)
-        return;
-
-      if (['a', 'e', 'i', 'o', 'u'].includes(pressed) ||
-          answer.length === 2)
-      {
-        const finalAnswer = answer + pressed;
-        if (checkAnswer(kana, finalAnswer))
-          getNewKana();
+        getNewKana();
         resetAnswer();
         return;
       }
+    }
 
-      if (pressed === 'n' && 
-          answer.length === 0)
-      {
-        if(checkAnswer(kana, pressed))
-        {
-          getNewKana();
-          resetAnswer();
-        }
-        else
-          setAnswer(pressed);
-        return;
-      }
+    if (['a', 'e', 'i', 'o', 'u'].includes(value.charAt(value.length - 1)) ||
+        value.length === 3)
+    {
+      if (checkAnswer(kana, value))
+        getNewKana();
+      resetAnswer();
+      return;
+    }
 
-      setAnswer(answer + pressed);
-    };
-    
+    setAnswer(value);
+  };
+  
+  useEffect(() => 
+  {    
     document.addEventListener('click', focusInput);
-    document.addEventListener('keydown', handleKeyPress);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
+    return () => document.removeEventListener('click', focusInput);
   });
 
   return (
-    <>
-      <input
-        type="text"
-        ref={inputRef}
-        onKeyDown={supressInput}
-      />
-      <div className="wrapper">
-        <div className="prompt" suppressHydrationWarning>
-          {kana}
-        </div>
-        <div className="answer">
-          {answer}
-        </div>
+    <div className="wrapper">
+      <div 
+        className="prompt" 
+        suppressHydrationWarning
+      >
+        {kana}
       </div>
-    </>
+      <input 
+        className="answer"
+        type="text"
+        value={answer}
+        ref={inputRef}
+        onChange={event => checkInput(event.target.value)}
+        autoFocus
+      />
+    </div>
   )
 }
 
@@ -91,10 +68,11 @@ function getRandomKana()
   return keys[Math.floor(Math.random() * keys.length)];
 }
 
-function checkAnswer(char, guess)
+function checkAnswer(prompt, answer)
 {
   const kana = {...hiragana, ...katakana};
-  return kana[char].includes(guess);
+  const answers = kana[prompt];
+  return answers.includes(answer);
 }
 
 export default App;

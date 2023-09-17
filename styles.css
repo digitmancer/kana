@@ -23,12 +23,12 @@ body {
 }
 
 .answer {
+  background-color: transparent;
+  border: none;
+  outline: none;
   font-family: 'Roboto', sans-serif;
   font-size: 10vmin;
   min-height: 1.2em;
-}
-
-input {
-  position: absolute;
-  top: -100px;
+  color: white;
+  text-align: center;
 }
