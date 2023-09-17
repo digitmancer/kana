@@ -9,30 +9,28 @@ function App()
   const [kana, setKana] = useState(getRandomKana());
   const getNewKana = () => setKana(getRandomKana());
 
-  const [answer, setAnswer] = useState('');
-  const resetAnswer = () => setAnswer('');
+  const [input, setInput] = useState('');
+  const resetInput = () => setInput('');
   const checkInput = (value) => 
   {
-    if (value === 'n')
+    if (value === 'n' &&
+        isCorrectAnswer(kana, value))
     {
-      if(checkAnswer(kana, value))
-      {
         getNewKana();
-        resetAnswer();
+        resetInput();
         return;
-      }
     }
 
     if (value.length === 3 ||
         ['a', 'e', 'i', 'o', 'u'].includes(value.charAt(value.length - 1)))
     {
-      if (checkAnswer(kana, value))
+      if (isCorrectAnswer(kana, value))
         getNewKana();
-      resetAnswer();
+      resetInput();
       return;
     }
 
-    setAnswer(value.toLowerCase().trim());
+    setInput(value.toLowerCase().trim());
   };
   
   useEffect(() => 
@@ -52,7 +50,7 @@ function App()
       <input 
         className="answer"
         type="text"
-        value={answer}
+        value={input}
         ref={inputRef}
         onChange={event => checkInput(event.target.value)}
         autoFocus
@@ -68,7 +66,7 @@ function getRandomKana()
   return keys[Math.floor(Math.random() * keys.length)];
 }
 
-function checkAnswer(prompt, answer)
+function isCorrectAnswer(prompt, answer)
 {
   const kana = {...hiragana, ...katakana};
   const pronunciation = kana[prompt];
