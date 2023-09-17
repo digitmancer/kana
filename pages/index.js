@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { hiragana, katakana } from '../kana';
 
 function App()
 {
   const [kana, setKana] = useState(getRandomKana());
-  const newKana = () => setKana(getRandomKana());
+  const getNewKana = () => setKana(getRandomKana());
 
   const [answer, setAnswer] = useState('');
   const resetAnswer = () => setAnswer('');
+
+  const inputRef = useRef(null);
+  const focusInput = () => inputRef.current.focus();
+  const supressInput = (event) => event.preventDefault();
 
   useEffect(() => 
   {
@@ -24,12 +28,15 @@ function App()
         return;
       }
 
-      if (['a', 'e', 'i', 'o', 'u', 'enter'].includes(pressed) ||
+      if (pressed.length != 1)
+        return;
+
+      if (['a', 'e', 'i', 'o', 'u'].includes(pressed) ||
           answer.length === 2)
       {
         const finalAnswer = answer + pressed;
         if (checkAnswer(kana, finalAnswer))
-          newKana();
+          getNewKana();
         resetAnswer();
         return;
       }
@@ -39,7 +46,7 @@ function App()
       {
         if(checkAnswer(kana, pressed))
         {
-          newKana();
+          getNewKana();
           resetAnswer();
         }
         else
@@ -47,12 +54,10 @@ function App()
         return;
       }
 
-      if (pressed.length != 1)
-        return;
-
       setAnswer(answer + pressed);
     };
     
+    document.addEventListener('click', focusInput);
     document.addEventListener('keydown', handleKeyPress);
 
     return () => {
@@ -61,20 +66,21 @@ function App()
   });
 
   return (
-    <div className="wrapper">
-      <div
-        className="prompt"
-        suppressHydrationWarning
-      >
-        {kana}
+    <>
+      <input
+        type="text"
+        ref={inputRef}
+        onKeyDown={supressInput}
+      />
+      <div className="wrapper">
+        <div className="prompt" suppressHydrationWarning>
+          {kana}
+        </div>
+        <div className="answer">
+          {answer}
+        </div>
       </div>
-      <div
-        className="answer"
-        suppressHydrationWarning
-      >
-        {answer}
-      </div>
-    </div>
+    </>
   )
 }
 
