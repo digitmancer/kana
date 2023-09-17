@@ -5,6 +5,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -15,6 +16,13 @@ body {
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
   font-family: 'Roboto', sans-serif;
-  font-size: x-large;
+  font-size: 25vh;
   user-select: none;
+  white-space: pre;
+  min-width: 3em;
+}
+
+.answer {
+  min-height: 1.2em;
+  vertical-align: middle;
 }

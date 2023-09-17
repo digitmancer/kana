@@ -6,6 +6,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
+          <title>Kana</title>
           <link 
             rel="preconnect" 
             href="https://fonts.googleapis.com"
@@ -13,7 +14,7 @@ class MyDocument extends Document {
           <link 
             rel="preconnect" 
             href="https://fonts.gstatic.com" 
-            crossorigin
+            crossOrigin
           />
           <link 
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto:wght@100&display=swap" 
