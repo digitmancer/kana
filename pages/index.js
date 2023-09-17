@@ -11,8 +11,10 @@ function App()
 
   const [input, setInput] = useState('');
   const resetInput = () => setInput('');
-  const checkInput = (value) => 
+
+  const checkInput = (event) => 
   {
+    const value = event.target.value;
     if (value === 'n' &&
         isCorrectAnswer(kana, value))
     {
@@ -52,7 +54,7 @@ function App()
         type="text"
         value={input}
         ref={inputRef}
-        onChange={event => checkInput(event.target.value)}
+        onChange={checkInput}
         autoFocus
       />
     </div>

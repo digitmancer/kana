@@ -1,6 +1,6 @@
 body {
   background-color: #242424;
-  color: #fff;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,16 +19,16 @@ body {
   font-size: 30vmin;
   user-select: none;
   white-space: pre;
-  min-width: 3em;
+  width: 1.5em;
 }
 
 .answer {
   background-color: transparent;
   border: none;
   outline: none;
+  color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 10vmin;
-  min-height: 1.2em;
-  color: white;
   text-align: center;
+  width: 1em;
 }
