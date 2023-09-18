@@ -1,34 +1,35 @@
 body {
-  background-color: #242424;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
   overflow: hidden;
+  background-color: #242424;
+  color: #fff;
 }
 
 .wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   background-color: #202020;
   border-radius: 5px;
-  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+.prompt {
+  width: 2em;
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  font-size: 30vmin;
-  user-select: none;
-  white-space: pre;
-  width: 1.5em;
+  font-size: 50vmin;
 }
 
 .answer {
-  background-color: transparent;
-  border: none;
-  outline: none;
+  width: 2em;
+  min-height: 1.5em;
+  text-align: center;
   color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 10vmin;
-  text-align: center;
-  width: 1em;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }

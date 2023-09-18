@@ -37,6 +37,7 @@ function App()
   
   useEffect(() => 
   {    
+    focusInput();
     document.addEventListener('click', focusInput);
     return () => document.removeEventListener('click', focusInput);
   });
@@ -55,6 +56,7 @@ function App()
         value={input}
         ref={inputRef}
         onChange={checkInput}
+        autoComplete="off"
         autoFocus
       />
     </div>
