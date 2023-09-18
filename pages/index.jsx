@@ -14,7 +14,7 @@ function App()
 
   const checkInput = (event) => 
   {
-    const value = event.target.value;
+    const value = event.target.value.toLowerCase().trim();
     if (value === 'n' &&
         isCorrectAnswer(kana, value))
     {
@@ -32,7 +32,7 @@ function App()
       return;
     }
 
-    setInput(value.toLowerCase().trim());
+    setInput(value);
   };
   
   useEffect(() => 
