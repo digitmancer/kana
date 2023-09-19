@@ -1,46 +1,74 @@
 import { useEffect, useState, useRef } from 'react';
 import { hiragana, katakana } from '../data/kana';
 
-function App()
+function AnswerField({ rightAnswer, onRightAnswer })
 {
   const inputRef = useRef(null);
-  const focusInput = () => inputRef.current.focus();
-
-  const [kana, setKana] = useState(getRandomKana());
-  const getNewKana = () => setKana(getRandomKana());
-
   const [input, setInput] = useState('');
-  const resetInput = () => setInput('');
+  const [missed, setMissed] = useState(false);
 
-  const checkInput = (event) => 
+  useEffect(() => 
+  {    
+    const focusInput = () => inputRef.current.focus();
+    document.addEventListener('click', focusInput);
+    focusInput();
+    return () => document.removeEventListener('click', focusInput);
+  }, []);
+
+  const handleInput = (event) => 
   {
     const value = event.target.value.toLowerCase().trim();
     if (value === 'n' &&
-        isCorrectAnswer(kana, value))
+        value === rightAnswer)
     {
-        getNewKana();
-        resetInput();
+        handleRightAnswer();
         return;
     }
 
     if (value.length === 3 ||
         ['a', 'e', 'i', 'o', 'u'].includes(value.charAt(value.length - 1)))
     {
-      if (isCorrectAnswer(kana, value))
-        getNewKana();
-      resetInput();
+      if (value === rightAnswer)
+        handleRightAnswer();
+      else
+        handleWrongAnswer();
       return;
     }
 
     setInput(value);
   };
-  
-  useEffect(() => 
-  {    
-    focusInput();
-    document.addEventListener('click', focusInput);
-    return () => document.removeEventListener('click', focusInput);
-  });
+
+  const handleRightAnswer = () =>
+  {
+    setMissed(false);
+    setInput('');
+    onRightAnswer();
+  };
+
+  const handleWrongAnswer = () =>
+  {
+    setMissed(true);
+    setInput('');
+  };
+
+  return (
+    <input 
+      className="answer"
+      type="text"
+      value={input}
+      ref={inputRef}
+      placeholder={missed ? rightAnswer : ''}
+      onChange={handleInput}
+      autoComplete="off"
+      autoFocus
+    />
+  )
+}
+
+function App()
+{
+  const [question, setQuestion] = useState(getQuestion());
+  const getNewQuestion = () => setQuestion(getQuestion());
 
   return (
     <div className="wrapper">
@@ -48,33 +76,24 @@ function App()
         className="prompt" 
         suppressHydrationWarning
       >
-        {kana}
+        {question.prompt}
       </div>
-      <input 
-        className="answer"
-        type="text"
-        value={input}
-        ref={inputRef}
-        onChange={checkInput}
-        autoComplete="off"
-        autoFocus
+      <AnswerField 
+        rightAnswer={question.answer} 
+        onRightAnswer={getNewQuestion}
       />
     </div>
   )
 }
 
-function getRandomKana()
+function getQuestion()
 {
-  const kana = {...hiragana, ...katakana};
-  const keys = Object.keys(kana);
-  return keys[Math.floor(Math.random() * keys.length)];
-}
-
-function isCorrectAnswer(prompt, answer)
-{
-  const kana = {...hiragana, ...katakana};
-  const pronunciation = kana[prompt];
-  return (answer === pronunciation);
+  const questions = [...hiragana, ...katakana];
+  const question = questions[Math.floor(Math.random() * questions.length)];
+  return { 
+    prompt: question.kana, 
+    answer: question.pronunciation 
+  };
 }
 
 export default App;
