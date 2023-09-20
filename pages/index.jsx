@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { useEffect, useState, useRef } from 'react';
 import { hiragana, hiraganaDigraphs, katakana, katakanaDigraphs } from '../data/kana';
 
@@ -72,10 +73,7 @@ function App()
 
   return (
     <div className="wrapper">
-      <div 
-        className="prompt" 
-        suppressHydrationWarning
-      >
+      <div className="prompt">
         {question.prompt}
       </div>
       <AnswerField 
@@ -96,4 +94,4 @@ function getQuestion()
   };
 }
 
-export default App;
+export default dynamic(() => Promise.resolve(App), { ssr: false })
