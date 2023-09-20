@@ -41,13 +41,15 @@ function AnswerField({ rightAnswer, onRightAnswer })
 
   const handleRightAnswer = () =>
   {
+    onRightAnswer();
     setMissed(false);
     setInput('');
-    onRightAnswer();
   };
 
   const handleWrongAnswer = () =>
   {
+    const pronunciation = new Audio('/audio/' + rightAnswer + '.wav');
+    pronunciation.play();
     setMissed(true);
     setInput('');
   };
