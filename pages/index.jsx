@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { hiragana, katakana } from '../data/kana';
+import { hiragana, hiraganaDigraphs, katakana, katakanaDigraphs } from '../data/kana';
 
 function AnswerField({ rightAnswer, onRightAnswer })
 {
@@ -88,7 +88,7 @@ function App()
 
 function getQuestion()
 {
-  const questions = [...hiragana, ...katakana];
+  const questions = [...hiragana, ...katakana, ...hiraganaDigraphs, ...katakanaDigraphs];
   const question = questions[Math.floor(Math.random() * questions.length)];
   return { 
     prompt: question.kana, 

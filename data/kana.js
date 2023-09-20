@@ -147,3 +147,53 @@ export const katakana =
   {"kana": "ペ",  "pronunciation": "pe",  "weight": 1.0},
   {"kana": "ポ",  "pronunciation": "po",  "weight": 1.0}
 ];
+
+export const hiraganaDigraphs = 
+[
+  {"kana": "きゃ",  "pronunciation": "kya", "weight": 1.0},
+  {"kana": "きゅ",  "pronunciation": "kyu", "weight": 1.0},
+  {"kana": "きょ",  "pronunciation": "kyo", "weight": 1.0},
+  {"kana": "しゃ",  "pronunciation": "sha", "weight": 1.0},
+  {"kana": "しゅ",  "pronunciation": "shu", "weight": 1.0},
+  {"kana": "しょ",  "pronunciation": "sho", "weight": 1.0},
+  {"kana": "ちゃ",  "pronunciation": "cha", "weight": 1.0},
+  {"kana": "ちゅ",  "pronunciation": "chu", "weight": 1.0},
+  {"kana": "ちょ",  "pronunciation": "cho", "weight": 1.0},
+  {"kana": "にゃ",  "pronunciation": "nya", "weight": 1.0},
+  {"kana": "にゅ",  "pronunciation": "nyu", "weight": 1.0},
+  {"kana": "にょ",  "pronunciation": "nyo", "weight": 1.0},
+  {"kana": "ひゃ",  "pronunciation": "hya", "weight": 1.0},
+  {"kana": "ひゅ",  "pronunciation": "hyu", "weight": 1.0},
+  {"kana": "ひょ",  "pronunciation": "hyo", "weight": 1.0},
+  {"kana": "みゃ",  "pronunciation": "mya", "weight": 1.0},
+  {"kana": "みゅ",  "pronunciation": "myu", "weight": 1.0},
+  {"kana": "みょ",  "pronunciation": "myo", "weight": 1.0},
+  {"kana": "りゃ",  "pronunciation": "rya", "weight": 1.0},
+  {"kana": "りゅ",  "pronunciation": "ryu", "weight": 1.0},
+  {"kana": "りょ",  "pronunciation": "ryo", "weight": 1.0}
+];
+
+export const katakanaDigraphs = 
+[
+  {"kana": "キャ",  "pronunciation": "kya", "weight": 1.0},
+  {"kana": "キュ",  "pronunciation": "kyu", "weight": 1.0},
+  {"kana": "キョ",  "pronunciation": "kyo", "weight": 1.0},
+  {"kana": "シャ",  "pronunciation": "sha", "weight": 1.0},
+  {"kana": "シュ",  "pronunciation": "shu", "weight": 1.0},
+  {"kana": "ショ",  "pronunciation": "sho", "weight": 1.0},
+  {"kana": "チャ",  "pronunciation": "cha", "weight": 1.0},
+  {"kana": "チュ",  "pronunciation": "chu", "weight": 1.0},
+  {"kana": "チョ",  "pronunciation": "cho", "weight": 1.0},
+  {"kana": "ニャ",  "pronunciation": "nya", "weight": 1.0},
+  {"kana": "ニュ",  "pronunciation": "nyu", "weight": 1.0},
+  {"kana": "ニョ",  "pronunciation": "nyo", "weight": 1.0},
+  {"kana": "ヒャ",  "pronunciation": "hya", "weight": 1.0},
+  {"kana": "ヒュ",  "pronunciation": "hyu", "weight": 1.0},
+  {"kana": "ヒョ",  "pronunciation": "hyo", "weight": 1.0},
+  {"kana": "ミャ",  "pronunciation": "mya", "weight": 1.0},
+  {"kana": "ミュ",  "pronunciation": "myu", "weight": 1.0},
+  {"kana": "ミョ",  "pronunciation": "myo", "weight": 1.0},
+  {"kana": "リャ",  "pronunciation": "rya", "weight": 1.0},
+  {"kana": "リュ",  "pronunciation": "ryu", "weight": 1.0},
+  {"kana": "リョ",  "pronunciation": "ryo", "weight": 1.0}
+]
