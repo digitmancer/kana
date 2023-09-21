@@ -8,6 +8,8 @@ function AnswerField({ rightAnswer, onRightAnswer })
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
 
+  const pronunciation = new Audio('/audio/' + rightAnswer + '.wav');
+  
   useEffect(() => 
   {    
     const focusInput = () => inputRef.current.focus();
@@ -48,7 +50,6 @@ function AnswerField({ rightAnswer, onRightAnswer })
 
   const handleWrongAnswer = () =>
   {
-    const pronunciation = new Audio('/audio/' + rightAnswer + '.wav');
     pronunciation.play();
     setMissed(true);
     setInput('');
