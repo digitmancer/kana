@@ -12,7 +12,12 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
 
   useEffect(() => 
   {    
-    const focusInput = () => inputRef.current.focus();
+    const focusInput = () => 
+    {
+      inputRef.current.focus();
+      window.scrollTo(0, 0);
+    };
+
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
     return () => document.removeEventListener('click', focusInput);
