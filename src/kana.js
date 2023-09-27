@@ -218,7 +218,7 @@ export const romanizations =
 
 export const gojoun = 
 {
-  '∅':
+  '':
   {
     a:  { hiragana: 'あ', katakana: 'ア' },
     i:  { hiragana: 'い', katakana: 'イ' },
@@ -300,6 +300,8 @@ export const gojoun =
   },
   'n':
   {
+    x:  null,
+    y:  null,
     n:  { hiragana: 'ん', katakana: 'ン' }
   }
 };
