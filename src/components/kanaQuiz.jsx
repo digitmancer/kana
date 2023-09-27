@@ -2,18 +2,18 @@ import { useEffect, useState, useRef } from 'react';
 import { romanizations } from '../kana';
 import { hiragana, katakana, hiraganaDigraphs, katakanaDigraphs } from '../userdata';
 
-function AnswerField({ romaji, onRightAnswer })
+function AnswerField({ containerRef, romaji, onRightAnswer, voice })
 {
   const inputRef = useRef(null);
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
 
-  const pronunciation = new Audio('/audio/sakura/' + romaji.nihon + '.mp3');
+  const pronunciation = new Audio(`/audio/${voice}/${romaji.nihon}.mp3`);
 
   useEffect(() => 
   {    
     const focusInput = () => inputRef.current.focus();
-    document.addEventListener('click', focusInput);
+    containerRef.current.addEventListener('click', focusInput);
     focusInput();
     return () => document.removeEventListener('click', focusInput);
   }, []);
@@ -94,19 +94,25 @@ function getQuestion()
   };
 }
 
-export default function KanaQuiz()
+export default function KanaQuiz({ voice })
 {
+  const wrapper = useRef(null);
   const [question, setQuestion] = useState(getQuestion());
   const getNewQuestion = () => setQuestion(getQuestion());
 
   return (
-    <div className="wrapper">
+    <div 
+      className="wrapper"
+      ref={wrapper}
+    >
       <div className="prompt">
         {question.kana}
       </div>
       <AnswerField 
+        containerRef={wrapper}
         romaji={question.romaji} 
         onRightAnswer={getNewQuestion}
+        voice={voice}
       />
     </div>
   )

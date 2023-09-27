@@ -6,9 +6,9 @@ function App()
 {
   return (
     <div>
-      <KanaQuiz />
-      <KanaTable type={'hiragana'}/>
-      <KanaTable type={'katakana'}/>
+      <KanaQuiz voice={'sakura'} />
+      <KanaTable type={'hiragana'} voice={'sakura'} />
+      <KanaTable type={'katakana'} voice={'sakura'} />
     </div>
   )
 }

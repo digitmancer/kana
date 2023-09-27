@@ -1,10 +1,30 @@
-import { gojoun, dakuten, yoon, romanizations } from '../kana';
+import { gojoun, dakuten, yoon } from '../kana';
 
-export default function KanaTable({ type })
+function KanaData({ data, type, voice })
+{
+  const [label, kana] = data;
+  const pronunciation = kana
+                      ? new Audio(`/audio/${voice}/${label}.mp3`)
+                      : null;
+  const playPronunciation = () => 
+  {
+    if (pronunciation)
+      pronunciation.play();
+  };
+
+  return (
+    <td onClick={playPronunciation}>{kana ? kana[type] : ''}</td>
+  )
+}
+
+export default function KanaTable({ type, voice })
 {
   return (
     <div className='kanaTable'>
-      <h1>{type}</h1>
+      <div className='tableName'>
+        <h1>{type}</h1>
+        <h3>{type === 'hiragana' ? 'ひらがな' : 'かたかな'}</h3>
+      </div>
       <table>
         <thead>
           <tr>
@@ -20,8 +40,8 @@ export default function KanaTable({ type })
           {Object.entries({...gojoun}).map(([label, kana]) => (
             <tr key={label}>
               <th>{label}</th>
-              {Object.values(kana).map((element, index) =>                  
-                <td key={index}>{element ? element[type] : ''}</td>
+              {Object.entries(kana).map((data, index) =>
+                <KanaData key={index} data={data} type={type} voice={voice} />
               )}
             </tr>
           ))}
@@ -42,8 +62,8 @@ export default function KanaTable({ type })
           {Object.entries({...dakuten}).map(([label, kana]) => (
             <tr key={label}>
               <th>{label}</th>
-              {Object.values(kana).map((element, index) =>                  
-                <td key={index}>{element ? element[type] : ''}</td>
+              {Object.entries(kana).map((data, index) =>
+                <KanaData key={index} data={data} type={type} voice={voice} />
               )}
             </tr>
           ))}
@@ -62,8 +82,8 @@ export default function KanaTable({ type })
           {Object.entries({...yoon}).map(([label, kana]) => (
             <tr key={label}>
               <th>{label}</th>
-              {Object.values(kana).map((element, index) =>                  
-                <td key={index}>{element ? element[type] : ''}</td>
+              {Object.entries(kana).map((data, index) =>
+                <KanaData key={index} data={data} type={type} voice={voice} />
               )}
             </tr>
           ))}

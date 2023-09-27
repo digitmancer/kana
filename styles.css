@@ -36,22 +36,30 @@ body {
 }
 
 .kanaTable {
+  gap: 1em;
+  padding: 1em;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 1em;
   justify-content: center;
   text-align: center;
   font-family: 'Noto Sans JP', sans-serif;
   font-family: 'Roboto', monospace;
   font-size: 28px;
-  padding: 1em;
+  user-select: none;
   h1 {
+    height: 0.5em;
     width: 4em;
+  }
+  h3 {
+    height: 0.5em;
+    color: #424242;
+    user-select: none;
   }
   th {
     color: #424242;
     font-style: italic;
+    user-select: none;
   }
   td {
     padding: 0.2em;
