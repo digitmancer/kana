@@ -15,9 +15,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
     const focusInput = () => 
     {
       inputRef.current.focus({ preventScroll: true });
-      document.body.style.overflow = 'hidden';
       window.scrollTo(0, 0);
-      setTimeout(() => { document.body.style.overflow = 'auto'; }, 100);
     }
 
     containerRef.current.addEventListener('click', focusInput);
@@ -26,7 +24,12 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
     return () => document.removeEventListener('click', focusInput);
   }, []);
 
-  const handleFocus = () => window.scrollTo(0, 0);
+  const handleFocus = () => 
+  {
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    setTimeout(() => { document.body.style.overflow = 'auto'; }, 1000);
+  }
 
   const handleInput = (event) => 
   {
