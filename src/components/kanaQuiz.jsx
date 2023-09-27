@@ -15,7 +15,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
     const focusInput = () => 
     {
       inputRef.current.focus({ preventScroll: true });
-      window.scrollTo(0, 0);
+      handleFocus();
     }
 
     containerRef.current.addEventListener('click', focusInput);

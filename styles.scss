@@ -48,24 +48,24 @@ body {
   font-family: 'Roboto', monospace;
   font-size: 28px;
   user-select: none;
-}
 
-h1 {
-  height: 0.5em;
-  width: 5em;
-}
-h3 {
-  height: 0.5em;
-  color: #424242;
-}
-th {
-  color: #424242;
-  font-style: italic;
-}
-td {
-  padding: 0.2em;
-}
-td:hover {
-  color: #999999;
-  cursor: pointer;
+  h1 {
+    height: 0.5em;
+    width: 5em;
+  }
+  h3 {
+    height: 0.5em;
+    color: #424242;
+  }
+  th {
+    color: #424242;
+    font-style: italic;
+  }
+  td {
+    padding: 0.2em;
+  }
+  td:hover {
+    color: #999999;
+    cursor: pointer;
+  }
 }
