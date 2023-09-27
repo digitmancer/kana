@@ -46,6 +46,9 @@ body {
   font-family: 'Roboto', monospace;
   font-size: 28px;
   padding: 1em;
+  h1 {
+    width: 4em;
+  }
   th {
     color: #424242;
     font-style: italic;

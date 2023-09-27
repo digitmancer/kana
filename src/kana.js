@@ -300,8 +300,6 @@ export const gojoun =
   },
   'n':
   {
-    x:  null,
-    y:  null,
     n:  { hiragana: 'ん', katakana: 'ン' }
   }
 };
