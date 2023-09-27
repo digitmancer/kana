@@ -12,7 +12,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
 
   useEffect(() => 
   {    
-    const focusInput = () => inputRef.current.focus();
+    const focusInput = () => inputRef.current.focus({ preventScroll: true });
 
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
@@ -20,12 +20,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
     return () => document.removeEventListener('click', focusInput);
   }, []);
 
-  const handleFocus = () => 
-  {
-    document.body.style.overflow = 'hidden';
-    window.scrollTo(0, 0);
-    document.body.style.overflow = 'auto';
-  };
+  const handleFocus = () => window.scrollTo(0, 0);
 
   const handleInput = (event) => 
   {
