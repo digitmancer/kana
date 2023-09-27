@@ -9,7 +9,7 @@ function AnswerField({ romaji, onRightAnswer })
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
 
-  const pronunciation = new Audio('/audio/' + romaji.hepburn + '.wav');
+  const pronunciation = new Audio('/audio/sakura/' + romaji.nihon + '.mp3');
 
   useEffect(() => 
   {    
