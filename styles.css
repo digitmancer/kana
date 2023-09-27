@@ -5,7 +5,7 @@ body {
 }
 
 .wrapper {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -35,7 +35,7 @@ body {
   outline: none;
 }
 
-.kanaTable {
+.kanaTables {
   gap: 1em;
   padding: 1em;
   display: flex;
@@ -49,19 +49,21 @@ body {
   user-select: none;
   h1 {
     height: 0.5em;
-    width: 4em;
+    width: 5em;
   }
   h3 {
     height: 0.5em;
     color: #424242;
-    user-select: none;
   }
   th {
     color: #424242;
     font-style: italic;
-    user-select: none;
   }
   td {
     padding: 0.2em;
+  }
+  td:hover {
+    color: #999999;
+    cursor: pointer;
   }
 }

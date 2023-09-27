@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic';
 import KanaQuiz from '../src/components/kanaQuiz'
-import KanaTable from '../src/components/kanaTable'
+import KanaTables from '../src/components/kanaTables'
 
 function App()
 {
   return (
     <div>
       <KanaQuiz voice={'sakura'} />
-      <KanaTable type={'hiragana'} voice={'sakura'} />
-      <KanaTable type={'katakana'} voice={'sakura'} />
+      <KanaTables type={'hiragana'} voice={'sakura'} />
+      <KanaTables type={'katakana'} voice={'sakura'} />
     </div>
   )
 }
