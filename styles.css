@@ -19,6 +19,7 @@ body {
 .prompt {
   width: 2em;
   text-align: center;
+  white-space: nowrap;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 50vmin;
 }
