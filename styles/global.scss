@@ -2,6 +2,29 @@ body {
   height: 100vh;
   background-color: #242424;
   color: #fff;
+  margin: 0;
+}
+
+.header {
+  width: 100%;
+  top: 0px;
+  left: auto;
+  right: 0px;
+  z-index: 1100;
+  display: flex;
+  position: sticky;
+  background-color: rgba(24, 24, 24, 0.8);
+  backdrop-filter: blur(8px);
+  background-image: none;
+  border-style: solid;
+  border-color: rgba(42, 42, 42, 0.08);
+  border-width: 0px 0px thin;
+  box-shadow: none;
+  color: rgb(157, 168, 183);
+
+  button:hover {
+    background-color: #202020;
+  }
 }
 
 .wrapper {

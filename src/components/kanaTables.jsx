@@ -5,7 +5,7 @@ function MoraData({ data, type, voice })
   const [label, mora] = data;
 
   if (mora === null)
-    return <th/>
+    return <th />
 
   const pronunciation = new Audio(`/audio/${voice}/${label}.mp3`);
   const playPronunciation = () => pronunciation.play();
@@ -21,7 +21,7 @@ function MoraTable({ headers, data, type, voice })
     <table>
       <thead>
         <tr>
-          <th/>
+          <th />
           {headers.map(header => (
             <th>{header}</th>
           ))}
