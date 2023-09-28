@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
-import '../styles.scss'
+import '../styles/global.scss'
 
-function MyApp({ Component, pageProps })
+export default function KanaCoach({ Component, pageProps })
 {
   return (
     <>
@@ -14,5 +14,3 @@ function MyApp({ Component, pageProps })
     </>
   )
 }
-
-export default MyApp;
