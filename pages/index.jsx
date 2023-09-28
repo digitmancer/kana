@@ -1,46 +1,63 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Header from '../src/components/header'
-import KanaQuiz from '../src/components/kanaQuiz'
-import KanaTables from '../src/components/kanaTables'
+import Header from '../src/components/header';
+import KanaQuiz from '../src/components/kanaQuiz';
+import KanaTables from '../src/components/kanaTables';
+import Settings from '../src/components/settings';
+import { ConfigProvider } from '../src/components/configProvider';
 
-function StudyPage()
+const AppContext = createContext({
+});
+
+function PracticePage()
+{
+  return (
+    <KanaQuiz />
+  )
+}
+
+function ReviewPage()
 {
   return (
     <div>
-      <KanaTables type={'hiragana'} voice={'sakura'} />
-      <KanaTables type={'katakana'} voice={'sakura'} />
+      <KanaTables type={'hiragana'} />
+      <KanaTables type={'katakana'} />
     </div>
   )
 }
 
-function QuizPage()
+function SettingsPage()
 {
   return (
-    <div>
-      <KanaQuiz voice={'sakura'} />
-    </div>
+    <Settings />
   )
 }
 
 function PageContent({ page })
 {
-  if (page == 'Practice')
-    return <QuizPage />
-
-  return <StudyPage />
+  switch (page)
+  {
+    case 'Practice':
+      return <PracticePage />
+    case 'Review':
+      return <ReviewPage />
+    case 'Settings':
+      return <SettingsPage />
+    default:
+      return <PracticePage />
+  }
 }
 
 function App()
 {
+  const pages = [ 'Practice', 'Review', 'Settings' ];
   const [page, setPage] = useState('Practice');
-  const pages = [ 'Practice', 'Review' ];
 
   return (
-    <>
+    <ConfigProvider>
       <Header pages={pages} setPage={setPage} />
       <PageContent page={page} />
-    </>
+    </ConfigProvider>
   )
 }
 

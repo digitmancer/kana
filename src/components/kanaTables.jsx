@@ -1,13 +1,16 @@
+import { useContext } from 'react';
 import { gojoun, dakuten, yoon } from '../kana';
+import { ConfigContext } from './configProvider';
 
-function MoraData({ data, type, voice })
+function MoraData({ data, type })
 {
   const [label, mora] = data;
+  const [config] = useContext(ConfigContext);
 
   if (mora === null)
     return <th />
 
-  const pronunciation = new Audio(`/audio/${voice}/${label}.mp3`);
+  const pronunciation = new Audio(`/audio/${config.voice}/${label}.mp3`);
   const playPronunciation = () => pronunciation.play();
 
   return (
@@ -15,7 +18,7 @@ function MoraData({ data, type, voice })
   )
 }
 
-function MoraTable({ headers, data, type, voice })
+function MoraTable({ headers, data, type })
 {
   return (
     <table>
@@ -33,7 +36,7 @@ function MoraTable({ headers, data, type, voice })
           <tr key={label}>
             <th>{label}</th>
             {Object.entries(mora).map((data, index) =>
-              <MoraData key={index} data={data} type={type} voice={voice} />
+              <MoraData key={index} data={data} type={type} />
             )}
             <th>&nbsp;&nbsp;&nbsp;</th>
           </tr>
@@ -43,7 +46,7 @@ function MoraTable({ headers, data, type, voice })
   )
 }
 
-export default function KanaTables({ type, voice })
+export default function KanaTables({ type })
 {
   const kanaHeaders = ['a', 'i', 'u', 'e', 'o'];
   const yoonHeaders = ['a', 'u', 'o'];
@@ -52,25 +55,22 @@ export default function KanaTables({ type, voice })
     <div className='kanaTables'>
       <div className='label'>
         <h1>{type}</h1>
-        <h3>{type === 'hiragana' ? 'ひらがな' : 'かたかな'}</h3>
+        <h3>{type === 'hiragana' ? 'ひらがな' : 'カタカナ'}</h3>
       </div>
       <MoraTable 
         headers={kanaHeaders}
         data={gojoun}  
         type={type} 
-        voice={voice} 
       />
       <MoraTable 
         headers={kanaHeaders}
         data={dakuten}
         type={type}
-        voice={voice} 
       />
       <MoraTable 
         headers={yoonHeaders} 
         data={yoon}
         type={type} 
-        voice={voice} 
       />
     </div>
   )

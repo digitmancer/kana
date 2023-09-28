@@ -1,14 +1,16 @@
-import { useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { romanizations } from '../kana';
 import { hiragana, katakana, hiraganaDigraphs, katakanaDigraphs } from '../userdata';
+import { ConfigContext } from './configProvider';
 
-function AnswerField({ containerRef, romaji, onRightAnswer, voice })
+function AnswerField({ containerRef, romaji, onRightAnswer })
 {
   const inputRef = useRef(null);
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
+  const [config] = useContext(ConfigContext);
 
-  const pronunciation = new Audio(`/audio/${voice}/${romaji.nihon}.mp3`);
+  const pronunciation = new Audio(`/audio/${config.voice}/${romaji.nihon}.mp3`);
 
   useEffect(() => 
   {    
@@ -75,7 +77,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer, voice })
       type="text"
       value={input}
       ref={inputRef}
-      placeholder={missed ? romaji.hepburn : ''}
+      placeholder={missed ? romaji[config.romanization] : ''}
       onChange={handleInput}
       onFocus={handleFocus}
       autoComplete="off"
@@ -108,7 +110,7 @@ function getQuestion()
   };
 }
 
-export default function KanaQuiz({ voice })
+export default function KanaQuiz()
 {
   const wrapper = useRef(null);
   const [question, setQuestion] = useState(getQuestion());
@@ -116,7 +118,7 @@ export default function KanaQuiz({ voice })
 
   return (
     <div 
-      className="wrapper"
+      className="quiz"
       ref={wrapper}
     >
       <div className="prompt">
@@ -126,7 +128,6 @@ export default function KanaQuiz({ voice })
         containerRef={wrapper}
         romaji={question.romaji} 
         onRightAnswer={getNewQuestion}
-        voice={voice}
       />
     </div>
   )

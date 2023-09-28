@@ -27,7 +27,7 @@ body {
   }
 }
 
-.wrapper {
+.quiz {
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -90,5 +90,32 @@ body {
   td:hover {
     color: #999999;
     cursor: pointer;
+  }
+}
+
+.settings {
+  gap: 1em;
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #202020;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+
+  .MuiSelect-standard {
+    color: white;
+  }
+
+  .MuiSelect-icon {
+    color: white;
+  }
+
+  .MuiFormHelperText-root {
+    color: white;
   }
 }
