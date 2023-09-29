@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { romanizations } from '../kana';
-import { hiragana, katakana, hiraganaDigraphs, katakanaDigraphs } from '../userdata';
 import { ConfigContext } from './configProvider';
+import { romanizations } from '../kana';
+import { hiragana, katakana } from '../userdata';
 
 function AnswerField({ containerRef, romaji, onRightAnswer })
 {
@@ -14,24 +14,17 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
 
   useEffect(() => 
   {    
-    const focusInput = () => 
-    {
-      inputRef.current.focus({ preventScroll: true });
-      handleFocus();
-    }
-
-    containerRef.current.addEventListener('click', focusInput);
-    focusInput();
-
-    return () => document.removeEventListener('click', focusInput);
-  }, []);
-
-  const handleFocus = () => 
-  {
+    const focusInput = () => inputRef.current.focus({ preventScroll: true });
+    const container = containerRef.current;
+    container.addEventListener('click', focusInput);
     document.body.style.overflow = 'hidden';
-    window.scrollTo(0, 0);
-    setTimeout(() => { document.body.style.overflow = 'auto'; }, 1000);
-  }
+
+    return () => 
+    {
+      container.removeEventListener('click', focusInput);
+      document.body.style.overflow = 'auto';
+    }
+  }, []);
 
   const handleInput = (event) => 
   {
@@ -79,7 +72,6 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
       ref={inputRef}
       placeholder={missed ? romaji[config.romanization] : ''}
       onChange={handleInput}
-      onFocus={handleFocus}
       autoComplete="off"
       autoFocus
     />
@@ -88,44 +80,40 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
 
 function getQuestion()
 {
-  const questions = 
-  [
-    ...hiragana, 
-    ...katakana, 
-    ...hiraganaDigraphs, 
-    ...katakanaDigraphs
-  ];
+  const questions = { ...hiragana, ...katakana };
+  const totalWeight = 
+    Object.values(questions).reduce((total, weight) => total + weight, 0);
 
-  const totalWeight = questions.reduce((total, question) => total + question.weight, 0);
   let index = totalWeight * Math.random();
-  const question = questions.find(element => 
-  {
-    index -= element.weight;
-    return index <= 0;
-  });
+  const [kana] = 
+    Object.entries(questions).find(([_, weight]) => 
+    {
+      index -= weight;
+      return (index <= 0);
+    });
 
   return {
-    kana:   question.kana,
-    romaji: romanizations[question.kana]
+    kana:   kana,
+    romaji: romanizations[kana]
   };
 }
 
 export default function KanaQuiz()
 {
-  const wrapper = useRef(null);
+  const containerRef = useRef(null);
   const [question, setQuestion] = useState(getQuestion());
   const getNewQuestion = () => setQuestion(getQuestion());
 
   return (
     <div 
       className="quiz"
-      ref={wrapper}
+      ref={containerRef}
     >
       <div className="prompt">
         {question.kana}
       </div>
       <AnswerField 
-        containerRef={wrapper}
+        containerRef={containerRef}
         romaji={question.romaji} 
         onRightAnswer={getNewQuestion}
       />
