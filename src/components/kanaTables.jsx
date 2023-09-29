@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { gojoun, dakuten, yoon } from '../kana';
 import { ConfigContext } from './configProvider';
+import { gojoun, dakuten, yoon } from '../kana';
 
 function MoraData({ data, type })
 {
@@ -10,8 +10,11 @@ function MoraData({ data, type })
   if (mora === null)
     return <th />
 
-  const pronunciation = new Audio(`/audio/${config.voice}/${label}.mp3`);
-  const playPronunciation = () => pronunciation.play();
+  const playPronunciation = () => 
+  { 
+    const pronunciation = new Audio(`/audio/${config.voice}/${label}.mp3`);
+    pronunciation.play();
+  };
 
   return (
     <td onClick={playPronunciation}>{mora ? mora[type] : ''}</td>
