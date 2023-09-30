@@ -1,13 +1,10 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Header from '../src/components/header';
 import KanaQuiz from '../src/components/kanaQuiz';
 import KanaTables from '../src/components/kanaTables';
 import Settings from '../src/components/settings';
 import { ConfigProvider } from '../src/components/configProvider';
-
-const AppContext = createContext({
-});
 
 function PracticePage()
 {

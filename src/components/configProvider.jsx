@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-const ConfigContext = createContext(null);
+const ConfigContext = createContext();
 
 function ConfigProvider({ children })
 {

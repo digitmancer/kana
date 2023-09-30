@@ -1,8 +1,9 @@
 body {
   height: 100vh;
-  background-color: #242424;
-  color: #fff;
   margin: 0;
+  background-color: #242424;
+  font-family: 'Roboto', sans-serif;
+  color: white;
 }
 
 .header {
@@ -20,7 +21,6 @@ body {
   border-color: rgba(42, 42, 42, 0.08);
   border-width: 0px 0px thin;
   box-shadow: none;
-  color: rgb(157, 168, 183);
 
   button:hover {
     background-color: #202020;
@@ -44,6 +44,7 @@ body {
   text-align: center;
   white-space: nowrap;
   font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
   font-size: 50vmin;
 }
 
@@ -52,7 +53,6 @@ body {
   min-height: 1.5em;
   text-align: center;
   color: white;
-  font-family: 'Roboto', sans-serif;
   font-size: 10vmin;
   background-color: transparent;
   border: none;
@@ -67,9 +67,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   text-align: center;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-family: 'Roboto', monospace;
-  font-size: 28px;
+  font-size: 32px;
   user-select: none;
 
   h1 {
@@ -79,6 +77,8 @@ body {
   h3 {
     height: 0.5em;
     color: #424242;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 600;
   }
   th {
     color: #424242;
@@ -86,6 +86,8 @@ body {
   }
   td {
     padding: 0.2em;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 600;
   }
   td:hover {
     color: #999999;

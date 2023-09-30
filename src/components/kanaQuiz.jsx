@@ -17,13 +17,8 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
     const focusInput = () => inputRef.current.focus({ preventScroll: true });
     const container = containerRef.current;
     container.addEventListener('click', focusInput);
-    document.body.style.overflow = 'hidden';
-
-    return () => 
-    {
-      container.removeEventListener('click', focusInput);
-      document.body.style.overflow = 'auto';
-    }
+    
+    return () => container.removeEventListener('click', focusInput);
   }, []);
 
   const handleInput = (event) => 
