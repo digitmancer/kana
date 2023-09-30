@@ -5,7 +5,7 @@ import { hiragana, katakana } from '../userdata';
 
 function AnswerField({ containerRef, romaji, onRightAnswer })
 {
-  const inputRef = useRef(null);
+  const inputRef = useRef();
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
   const [config] = useContext(ConfigContext);
@@ -13,18 +13,18 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
   const pronunciation = new Audio(`/audio/${config.voice}/${romaji.nihon}.mp3`);
 
   useEffect(() => 
-  {    
+  {
     const focusInput = () => inputRef.current.focus({ preventScroll: true });
-    const container = containerRef.current;
-    container.addEventListener('click', focusInput);
-    
-    return () => container.removeEventListener('click', focusInput);
+
+    containerRef.current.addEventListener('click', focusInput);
+    focusInput();
   }, []);
 
   const handleInput = (event) => 
   {
     const isRightAnswer = (answer) => Object.values(romaji).includes(answer);
     const value = event.target.value.toLowerCase().trim();
+
     if (value === 'n' && 
         isRightAnswer(value))
     {
@@ -67,8 +67,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
       ref={inputRef}
       placeholder={missed ? romaji[config.romanization] : ''}
       onChange={handleInput}
-      autoComplete="off"
-      autoFocus
+      autoComplete="nope"
     />
   )
 }
@@ -95,7 +94,7 @@ function getQuestion()
 
 export default function KanaQuiz()
 {
-  const containerRef = useRef(null);
+  const containerRef = useRef();
   const [question, setQuestion] = useState(getQuestion());
   const getNewQuestion = () => setQuestion(getQuestion());
 
