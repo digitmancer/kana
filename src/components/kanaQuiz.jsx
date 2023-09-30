@@ -13,12 +13,23 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
   const pronunciation = new Audio(`/audio/${config.voice}/${romaji.nihon}.mp3`);
 
   useEffect(() => 
-  {
-    const focusInput = () => inputRef.current.focus({ preventScroll: true });
+  {    
+    const focusInput = () => 
+    {
+      inputRef.current.focus({ preventScroll: true });
+      handleFocus();
+    }
 
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
   }, []);
+
+  const handleFocus = () =>
+  {
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    setTimeout(() => { document.body.style.overflow = 'auto'; }, 1000);
+  };
 
   const handleInput = (event) => 
   {
@@ -67,6 +78,7 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
       ref={inputRef}
       placeholder={missed ? romaji[config.romanization] : ''}
       onChange={handleInput}
+      onFocus={handleFocus}
       autoComplete="nope"
     />
   )
