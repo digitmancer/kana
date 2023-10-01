@@ -1,21 +1,20 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ConfigContext } from './configProvider';
 import { romanizations } from '../kana';
-import { hiragana, katakana } from '../userdata';
 
-function AnswerField({ containerRef, romaji, onRightAnswer })
+function AnswerField({ containerRef, kana, onRightAnswer })
 {
   const inputRef = useRef();
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
   const [config] = useContext(ConfigContext);
 
+  const romaji = romanizations[kana];
   const pronunciation = new Audio(`/audio/${config.voice}/${romaji.nihon}.mp3`);
 
   useEffect(() => 
   {
     const focusInput = () => inputRef.current.focus({ preventScroll: true });
-
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
   }, []);
@@ -47,6 +46,9 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
 
   const handleRightAnswer = () =>
   {
+    if (!missed)
+      decreaseWeight(kana);
+
     onRightAnswer();
     setMissed(false);
     setInput('');
@@ -54,6 +56,9 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
 
   const handleWrongAnswer = () =>
   {
+    if (!missed)
+      increaseWeight(kana);
+
     pronunciation.play();
     setMissed(true);
     setInput('');
@@ -74,22 +79,55 @@ function AnswerField({ containerRef, romaji, onRightAnswer })
 
 function getQuestion()
 {
-  const questions = { ...hiragana, ...katakana };
+  const weights = loadWeights();
   const totalWeight = 
-    Object.values(questions).reduce((total, weight) => total + weight, 0);
+    Object.values(weights).reduce((total, weight) => total + weight, 0);
 
   let index = totalWeight * Math.random();
   const [kana] = 
-    Object.entries(questions).find(([_, weight]) => 
+    Object.entries(weights).find(([_, weight]) => 
     {
       index -= weight;
       return (index <= 0);
     });
 
-  return {
-    kana:   kana,
-    romaji: romanizations[kana]
-  };
+  return kana;
+}
+
+function loadWeights()
+{
+  let weights = localStorage.getItem('userData');
+  if (weights)
+    return JSON.parse(weights);
+
+  weights = 
+    Object.keys(romanizations).reduce((list, kana) => 
+    {
+      list[kana] = 1.0;
+      return list;
+    }, {});
+
+  storeWeights(weights);
+  return weights;
+}
+
+function storeWeights(weights)
+{
+  localStorage.setItem('userData', JSON.stringify(weights));
+}
+
+function decreaseWeight(kana)
+{
+  const weights = loadWeights();
+  weights[kana] *= 0.8;
+  storeWeights(weights);
+}
+
+function increaseWeight(kana)
+{
+  const weights = loadWeights();
+  weights[kana] *= 1.5;
+  storeWeights(weights);
 }
 
 export default function KanaQuiz()
@@ -104,11 +142,11 @@ export default function KanaQuiz()
       ref={containerRef}
     >
       <div className="prompt">
-        {question.kana}
+        {question}
       </div>
       <AnswerField 
         containerRef={containerRef}
-        romaji={question.romaji} 
+        kana={question} 
         onRightAnswer={getNewQuestion}
       />
     </div>

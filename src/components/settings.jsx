@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
+import { Button, FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import { ConfigContext } from './configProvider';
 
 export default function Settings()
@@ -7,7 +7,8 @@ export default function Settings()
   const [config, setConfig] = useContext(ConfigContext);
   const handleVoiceChange = (event) => setConfig({...config, voice: event.target.value});
   const handleRomanizationChange = (event) => setConfig({...config, romanization: event.target.value});
-  
+  const resetUserData = () => localStorage.clear('userData');
+
   return (
     <div className="settings" >
       <FormControl variant="standard">
@@ -35,6 +36,13 @@ export default function Settings()
         </Select>
           <FormHelperText>Preferred romanization</FormHelperText>
       </FormControl>
+      <Button 
+        variant="outlined"
+        color="error"
+        onClick={resetUserData}
+      >
+        RESET USER DATA
+      </Button>
     </div>
   );
 }
