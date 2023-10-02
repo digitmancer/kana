@@ -126,3 +126,26 @@ body {
     color: white;
   }
 }
+
+.MuiDialog-root {
+  .MuiBackdrop-root {
+    backdrop-filter: blur(8px);
+  }
+
+  .MuiPaper-root {
+    color: white !important;
+    background-color: #242424 !important;
+  }
+
+  .MuiTypography-root {
+    color: white;
+  }
+}
+
+.MuiPaper-root {
+  color: white !important;
+  background-color: rgba(24, 24, 24, 0.7) !important;
+  backdrop-filter: blur(8px);
+}
+
+

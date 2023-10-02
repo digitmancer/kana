@@ -1,13 +1,61 @@
-import { useContext } from 'react';
-import { Button, FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
+import { useContext, useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import { ConfigContext } from './configProvider';
+
+function ResetDataButton()
+{
+  const [dialogOpen, setDialogOpen] = useState();
+  
+  const openConfirmationDialog = () => setDialogOpen(true);
+  const closeConfirmationDialog = () => setDialogOpen(false);
+
+  const resetUserData = () => 
+  {
+    localStorage.clear('userData');
+    closeConfirmationDialog();
+  }
+
+  return (
+    <>
+      <Button 
+        variant="outlined"
+        color="error"
+        onClick={openConfirmationDialog}
+      >
+        RESET LEARNING DATA
+      </Button>
+      <Dialog
+        open={dialogOpen}
+        onClose={closeConfirmationDialog}
+        aria-labelledby="confirmation-dialog-title"
+        aria-describedby="confirmation-dialog-description"
+      >
+        <DialogTitle id="confirmation-dialog-title">
+          Reset learning data?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirmation-dialog-description">
+            Are you sure you want to reset all learning data?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeConfirmationDialog} autoFocus>
+            CANCEL
+          </Button>
+          <Button onClick={resetUserData} color="error">
+            RESET
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
 
 export default function Settings()
 {
   const [config, setConfig] = useContext(ConfigContext);
   const handleVoiceChange = (event) => setConfig({...config, voice: event.target.value});
   const handleRomanizationChange = (event) => setConfig({...config, romanization: event.target.value});
-  const resetUserData = () => localStorage.clear('userData');
 
   return (
     <div className="settings" >
@@ -36,13 +84,7 @@ export default function Settings()
         </Select>
           <FormHelperText>Preferred romanization</FormHelperText>
       </FormControl>
-      <Button 
-        variant="outlined"
-        color="error"
-        onClick={resetUserData}
-      >
-        RESET USER DATA
-      </Button>
+      <ResetDataButton />
     </div>
   );
 }
