@@ -4,7 +4,7 @@ import { ConfigContext } from './configProvider';
 
 function ResetDataButton()
 {
-  const [dialogOpen, setDialogOpen] = useState();
+  const [dialogOpen, setDialogOpen] = useState(false);
   
   const openConfirmationDialog = () => setDialogOpen(true);
   const closeConfirmationDialog = () => setDialogOpen(false);

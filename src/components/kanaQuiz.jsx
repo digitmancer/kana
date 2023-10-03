@@ -77,7 +77,7 @@ function AnswerField({ containerRef, kana, onRightAnswer })
   )
 }
 
-function getQuestion()
+function getRandomKana()
 {
   const weights = loadWeights();
   const totalWeight = 
@@ -133,8 +133,8 @@ function increaseWeight(kana)
 export default function KanaQuiz()
 {
   const containerRef = useRef();
-  const [question, setQuestion] = useState(getQuestion());
-  const getNewQuestion = () => setQuestion(getQuestion());
+  const [kana, setKana] = useState(getRandomKana());
+  const getNewKana = () => setKana(getRandomKana());
 
   return (
     <div 
@@ -142,12 +142,12 @@ export default function KanaQuiz()
       ref={containerRef}
     >
       <div className="prompt">
-        {question}
+        {kana}
       </div>
       <AnswerField 
         containerRef={containerRef}
-        kana={question} 
-        onRightAnswer={getNewQuestion}
+        kana={kana} 
+        onRightAnswer={getNewKana}
       />
     </div>
   )
