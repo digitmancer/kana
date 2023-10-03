@@ -7,6 +7,7 @@ export default function Document()
       <Head>
         <meta charSet="utf-8" />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
       </Head>
       <body>
         <Main />

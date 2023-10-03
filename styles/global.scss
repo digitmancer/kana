@@ -27,6 +27,21 @@ body {
   }
 }
 
+.MuiDrawer-root {
+
+  .MuiBox-root {
+    width: 10em;
+  }
+
+  .MuiDivider-root {
+    border-color: #202020 !important;
+  }
+  
+  .MuiListItemButton-root {
+    padding: 1em;
+  }
+}
+
 .quiz {
   height: 100%;
   display: flex;
@@ -127,7 +142,16 @@ body {
   }
 }
 
+.MuiBackdrop-root {
+  backdrop-filter: blur(8px) !important;
+}
+
+.MuiBackdrop-invisible {
+  backdrop-filter: none !important;
+}
+
 .MuiDialog-root {
+
   .MuiBackdrop-root {
     backdrop-filter: blur(8px);
   }
@@ -145,7 +169,5 @@ body {
 .MuiPaper-root {
   color: white !important;
   background-color: rgba(24, 24, 24, 0.7) !important;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
 }
-
-
