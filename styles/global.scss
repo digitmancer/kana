@@ -27,21 +27,6 @@ body {
   }
 }
 
-.MuiDrawer-root {
-
-  .MuiBox-root {
-    width: 10em;
-  }
-
-  .MuiDivider-root {
-    border-color: #202020 !important;
-  }
-  
-  .MuiListItemButton-root {
-    padding: 1em;
-  }
-}
-
 .quiz {
   height: 100%;
   display: flex;
@@ -170,4 +155,20 @@ body {
   color: white !important;
   background-color: rgba(24, 24, 24, 0.7) !important;
   backdrop-filter: blur(12px);
+}
+
+.MuiDrawer-root {
+
+  .MuiBox-root {
+    width: 10em;
+  }
+
+  .MuiDivider-root {
+    border-color: #202020 !important;
+  }
+  
+  .MuiListItemButton-root {
+    padding: 1em;
+    padding-left: 1.5em;
+  }
 }
