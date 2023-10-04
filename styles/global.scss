@@ -158,17 +158,26 @@ body {
 }
 
 .MuiDrawer-root {
-
+  
   .MuiBox-root {
-    width: 10em;
+    width: 12em;
   }
 
   .MuiDivider-root {
     border-color: #202020 !important;
   }
   
+  .MuiListItem-root {
+    :hover {
+      background-color: #202020;
+    }
+  }
+
   .MuiListItemButton-root {
     padding: 1em;
-    padding-left: 1.5em;
+  }
+
+  .MuiListItemIcon-root {
+    color: white;
   }
 }
