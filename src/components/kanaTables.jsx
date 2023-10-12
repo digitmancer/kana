@@ -41,7 +41,6 @@ function MoraTable({ headers, data, type })
           {headers.map(header => (
             <th>{header}</th>
           ))}
-          <th>&nbsp;&nbsp;&nbsp;</th>
         </tr>
       </thead>
       <tbody>
@@ -51,7 +50,6 @@ function MoraTable({ headers, data, type })
             {Object.entries(mora).map((data, index) =>
               <MoraData key={index} data={data} type={type} />
             )}
-            <th>&nbsp;&nbsp;&nbsp;</th>
           </tr>
         ))}
       </tbody>

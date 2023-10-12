@@ -75,14 +75,21 @@ body {
     height: 0.5em;
     width: 5em;
   }
+
   h3 {
     height: 0.5em;
     color: #424242;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 600;
   }
+
   td {
-    padding: 0.2em;
+    padding: 0.1em;
+  }
+
+  th {
+    color: #424242;
+    font-style: italic;
   }
 
   .MuiButton-root {
