@@ -1,6 +1,7 @@
 import { useContext } from 'react';
+import { Button } from '@mui/material';
 import { ConfigContext } from './configProvider';
-import { gojoun, dakuten, yoon } from '../kana';
+import { gojoun, dakuten, yoon, romanizations } from '../kana';
 
 function MoraData({ data, type })
 {
@@ -17,7 +18,16 @@ function MoraData({ data, type })
   };
 
   return (
-    <td onClick={playPronunciation}>{mora ? mora[type] : ''}</td>
+    <td>
+      <Button 
+        variant="contained"
+        onClick={playPronunciation}
+      >
+        {mora[type]}
+        <br />
+        {romanizations[mora[type]][config.romanization]}
+      </Button>
+    </td>
   )
 }
 

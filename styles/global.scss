@@ -81,18 +81,19 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 600;
   }
-  th {
-    color: #424242;
-    font-style: italic;
-  }
   td {
     padding: 0.2em;
+  }
+
+  .MuiButton-root {
+    background-color: #424242;
+    color: white;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 600;
-  }
-  td:hover {
-    color: #999999;
-    cursor: pointer;
+
+    &:hover {
+      background-color: #999999;
+    }
   }
 }
 
