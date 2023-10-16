@@ -89,17 +89,18 @@ body {
 
   th {
     color: #424242;
+    font-weight: 400;
     font-style: italic;
   }
 
-  .MuiButton-root {
-    background-color: #424242;
+  .MuiButton-contained {
+    background-color: #181818;
     color: white;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 600;
 
     &:hover {
-      background-color: #999999;
+      background-color: #424242;
     }
   }
 }
