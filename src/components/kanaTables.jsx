@@ -31,10 +31,11 @@ function MoraData({ data, type })
   )
 }
 
-function MoraTable({ headers, data, type })
+function MoraTable({ headers, data, type, label })
 {
   return (
     <table>
+      <caption>{label}</caption>
       <thead>
         <tr>
           <th />
@@ -65,24 +66,29 @@ export default function KanaTables({ type })
   return (
     <div className='kanaTables'>
       <div className='label'>
-        <h1>{type}</h1>
+        <h1>{type === 'hiragana' ? 'Hiragana' : 'Katakana'}</h1>
         <h3>{type === 'hiragana' ? 'ひらがな' : 'カタカナ'}</h3>
       </div>
-      <MoraTable 
-        headers={kanaHeaders}
-        data={gojoun}  
-        type={type} 
-      />
-      <MoraTable 
-        headers={kanaHeaders}
-        data={dakuten}
-        type={type}
-      />
-      <MoraTable 
-        headers={yoonHeaders} 
-        data={yoon}
-        type={type} 
-      />
+      <div className='tables'>
+        <MoraTable 
+          headers={kanaHeaders}
+          label={'Gojūon'}
+          data={gojoun}  
+          type={type} 
+        />
+        <MoraTable 
+          headers={kanaHeaders}
+          label={'Dakuten / Handakuten'}
+          data={dakuten}
+          type={type}
+        />
+        <MoraTable 
+          headers={yoonHeaders} 
+          label={'Yōon'}
+          data={yoon}
+          type={type} 
+        />
+      </div>
     </div>
   )
 }

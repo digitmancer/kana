@@ -1,0 +1,16 @@
+* sound toggle button in practice mode
+* streak display in practice mode
+* responsive drawer (always shown in larger displays)
+* practice modes
+ * [quick|full] practice
+  * could be section with hiragana/katakana
+  * lap timers/streak display
+ * [error|mistake] [review|focus|practice]
+  * target errors 
+ * [selected|limited|custom] practice
+  * start here if learning, adding one row at a time
+  * set: hiragana, katakana, both
+  * group: gojoun, dakuten, yoon
+  * row: table with ability to select rows
+* refactor tables component
+* backend
