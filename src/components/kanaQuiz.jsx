@@ -1,13 +1,74 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { Icon, IconButton } from '@mui/material';
 import { ConfigContext } from './configProvider';
 import { romanizations } from '../kana';
 
-function AnswerField({ containerRef, kana, onRightAnswer })
+function getRandomKana()
 {
-  const inputRef = useRef();
+  const weights = loadWeights();
+  const totalWeight = 
+    Object.values(weights).reduce((total, weight) => total + weight, 0);
+
+  let index = totalWeight * Math.random();
+  const [kana] = 
+    Object.entries(weights).find(([_, weight]) => 
+    {
+      index -= weight;
+      return (index <= 0);
+    });
+
+  return kana;
+}
+
+function initializeWeights()
+{
+  const weights = 
+    Object.keys(romanizations).reduce((list, kana) => 
+    {
+      list[kana] = 1.0;
+      return list;
+    }, {});
+
+  storeWeights(weights);
+  return weights;
+}
+
+function loadWeights()
+{
+  const weights = localStorage.getItem('userData');
+  return weights ? JSON.parse(weights) : initializeWeights();
+}
+
+function storeWeights(weights)
+{
+  localStorage.setItem('userData', JSON.stringify(weights));
+}
+
+function decreaseWeight(kana)
+{
+  const weights = loadWeights();
+  weights[kana] *= 0.8;
+  storeWeights(weights);
+}
+
+function increaseWeight(kana)
+{
+  const weights = loadWeights();
+  weights[kana] *= 1.5;
+  storeWeights(weights);
+}
+
+export default function KanaQuiz()
+{
+  const [config] = useContext(ConfigContext);
+
   const [input, setInput] = useState('');
   const [missed, setMissed] = useState(false);
-  const [config] = useContext(ConfigContext);
+  const [mute, setMute] = useState(true);
+  const [kana, setKana] = useState(getRandomKana());
+
+  const containerRef = useRef();
+  const inputRef = useRef();
 
   const romaji = romanizations[kana];
   const pronunciation = new Audio(`/audio/${config.voice}/${romaji.nihon}.mp3`);
@@ -18,6 +79,30 @@ function AnswerField({ containerRef, kana, onRightAnswer })
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
   }, []);
+
+  const toggleMute = () => setMute(!mute);
+
+  const handleRightAnswer = () =>
+  {
+    if (!missed)
+      decreaseWeight(kana);
+
+    setKana(getRandomKana());
+    setMissed(false);
+    setInput('');
+  };
+
+  const handleWrongAnswer = () =>
+  {
+    if (!missed)
+      increaseWeight(kana);
+
+    if (!mute)
+      pronunciation.play();
+    
+    setMissed(true);
+    setInput('');
+  };
 
   const handleInput = (event) => 
   {
@@ -44,110 +129,25 @@ function AnswerField({ containerRef, kana, onRightAnswer })
     setInput(value);
   };
 
-  const handleRightAnswer = () =>
-  {
-    if (!missed)
-      decreaseWeight(kana);
-
-    onRightAnswer();
-    setMissed(false);
-    setInput('');
-  };
-
-  const handleWrongAnswer = () =>
-  {
-    if (!missed)
-      increaseWeight(kana);
-
-    pronunciation.play();
-    setMissed(true);
-    setInput('');
-  };
-
-  return (
-    <input 
-      className="answer"
-      type="text"
-      value={input}
-      ref={inputRef}
-      placeholder={missed ? romaji[config.romanization] : ''}
-      onChange={handleInput}
-      autoComplete="nope"
-    />
-  )
-}
-
-function getRandomKana()
-{
-  const weights = loadWeights();
-  const totalWeight = 
-    Object.values(weights).reduce((total, weight) => total + weight, 0);
-
-  let index = totalWeight * Math.random();
-  const [kana] = 
-    Object.entries(weights).find(([_, weight]) => 
-    {
-      index -= weight;
-      return (index <= 0);
-    });
-
-  return kana;
-}
-
-function loadWeights()
-{
-  let weights = localStorage.getItem('userData');
-  if (weights)
-    return JSON.parse(weights);
-
-  weights = 
-    Object.keys(romanizations).reduce((list, kana) => 
-    {
-      list[kana] = 1.0;
-      return list;
-    }, {});
-
-  storeWeights(weights);
-  return weights;
-}
-
-function storeWeights(weights)
-{
-  localStorage.setItem('userData', JSON.stringify(weights));
-}
-
-function decreaseWeight(kana)
-{
-  const weights = loadWeights();
-  weights[kana] *= 0.8;
-  storeWeights(weights);
-}
-
-function increaseWeight(kana)
-{
-  const weights = loadWeights();
-  weights[kana] *= 1.5;
-  storeWeights(weights);
-}
-
-export default function KanaQuiz()
-{
-  const containerRef = useRef();
-  const [kana, setKana] = useState(getRandomKana());
-  const getNewKana = () => setKana(getRandomKana());
-
   return (
     <div 
       className="quiz"
       ref={containerRef}
     >
-      <div className="prompt">
-        {kana}
-      </div>
-      <AnswerField 
-        containerRef={containerRef}
-        kana={kana} 
-        onRightAnswer={getNewKana}
+      <IconButton onClick={toggleMute}>
+        <Icon>
+          { mute ? 'volume_off' : 'volume_up' }
+        </Icon>
+      </IconButton>
+      <div className="prompt">{kana}</div>
+      <input 
+        className="answer"
+        type="text"
+        value={input}
+        ref={inputRef}
+        placeholder={missed ? romaji[config.romanization] : ''}
+        onChange={handleInput}
+        autoComplete="nope"
       />
     </div>
   )
