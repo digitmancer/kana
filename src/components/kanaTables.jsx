@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { ConfigContext } from './configProvider';
 import { gojoun, dakuten, yoon, romanizations } from '../kana';
 
-function MoraData({ data, type })
+function KanaDisplay({ data, type })
 {
   const [label, mora] = data;
   const [config] = useContext(ConfigContext);
@@ -31,7 +31,7 @@ function MoraData({ data, type })
   )
 }
 
-function MoraTable({ headers, data, type })
+function KanaTable({ headers, data, type })
 {
   return (
     <table>
@@ -48,7 +48,7 @@ function MoraTable({ headers, data, type })
           <tr key={label}>
             <th>{label}</th>
             {Object.entries(mora).map((data, index) =>
-              <MoraData key={index} data={data} type={type} />
+              <KanaDisplay key={index} data={data} type={type} />
             )}
           </tr>
         ))}
@@ -68,17 +68,17 @@ export default function KanaTables({ type })
         <h1>{type}</h1>
         <h3>{type === 'hiragana' ? 'ひらがな' : 'カタカナ'}</h3>
       </div>
-      <MoraTable 
+      <KanaTable 
         headers={kanaHeaders}
         data={gojoun}  
         type={type} 
       />
-      <MoraTable 
+      <KanaTable 
         headers={kanaHeaders}
         data={dakuten}
         type={type}
       />
-      <MoraTable 
+      <KanaTable 
         headers={yoonHeaders} 
         data={yoon}
         type={type} 

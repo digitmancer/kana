@@ -27,6 +27,24 @@ body {
   }
 }
 
+.quizSelect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+
+  .MuiButton-contained {
+    width: 20em;
+    padding: 1em;
+    margin: 1em;
+    background-color: #181818;
+
+    &:hover {
+      background-color: #202020;
+    }
+  }
+}
+
 .quiz {
   height: 100%;
   display: flex;

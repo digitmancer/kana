@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import { ConfigContext } from './configProvider';
+import { resetWeights } from '../userData';
 
 function ResetDataButton()
 {
@@ -11,7 +12,7 @@ function ResetDataButton()
 
   const resetUserData = () => 
   {
-    localStorage.clear('userData');
+    resetWeights();
     closeConfirmationDialog();
   }
 

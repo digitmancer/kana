@@ -49,11 +49,17 @@ function App()
 {
   const pages = [ 'Practice', 'Review', 'Settings' ];
   const [page, setPage] = useState('Practice');
+  const [key, setKey] = useState(0);
+  
+  const selectPage = (page) => {
+    setPage(page);
+    setKey(key + 1);
+  };
 
   return (
     <ConfigProvider>
-      <Header pages={pages} setPage={setPage} />
-      <PageContent page={page} />
+      <Header pages={pages} setPage={selectPage} />
+      <PageContent key={key} page={page} />
     </ConfigProvider>
   )
 }

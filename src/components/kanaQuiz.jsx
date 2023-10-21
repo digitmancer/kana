@@ -1,71 +1,34 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Icon, IconButton } from '@mui/material';
+import { Button, Icon, IconButton } from '@mui/material';
 import { ConfigContext } from './configProvider';
 import { romanizations } from '../kana';
+import * as data from '../userData';
 
-function getRandomKana()
+function getRandomKana(questions)
 {
-  const weights = loadWeights();
-  const totalWeight = 
-    Object.values(weights).reduce((total, weight) => total + weight, 0);
+  const kanaWeights = Object.entries(data.loadWeights())
+                            .filter(([kana]) => questions.includes(kana));       
+  const totalWeight = kanaWeights.reduce((sum, [_, weight]) => sum + weight, 0);
+  
+  let randomIndex = Math.random() * totalWeight;
+  for (const [kana, weight] of kanaWeights)
+  {
+    randomIndex -= weight;
+    if (randomIndex <= 0)
+      return kana;
+  }
 
-  let index = totalWeight * Math.random();
-  const [kana] = 
-    Object.entries(weights).find(([_, weight]) => 
-    {
-      index -= weight;
-      return (index <= 0);
-    });
-
-  return kana;
+  return kanaWeights.pop()[0];
 }
 
-function initializeWeights()
-{
-  const weights = 
-    Object.keys(romanizations).reduce((list, kana) => 
-    {
-      list[kana] = 1.0;
-      return list;
-    }, {});
-
-  storeWeights(weights);
-  return weights;
-}
-
-function loadWeights()
-{
-  const weights = localStorage.getItem('userData');
-  return weights ? JSON.parse(weights) : initializeWeights();
-}
-
-function storeWeights(weights)
-{
-  localStorage.setItem('userData', JSON.stringify(weights));
-}
-
-function decreaseWeight(kana)
-{
-  const weights = loadWeights();
-  weights[kana] *= 0.8;
-  storeWeights(weights);
-}
-
-function increaseWeight(kana)
-{
-  const weights = loadWeights();
-  weights[kana] *= 1.5;
-  storeWeights(weights);
-}
-
-export default function KanaQuiz()
+function Quiz({ questions })
 {
   const [config] = useContext(ConfigContext);
 
   const [input, setInput] = useState('');
+  const [kana, setKana] = useState(getRandomKana(questions));
   const [missed, setMissed] = useState(false);
   const [mute, setMute] = useState(true);
-  const [kana, setKana] = useState(getRandomKana());
 
   const containerRef = useRef();
   const inputRef = useRef();
@@ -78,16 +41,16 @@ export default function KanaQuiz()
     const focusInput = () => inputRef.current.focus({ preventScroll: true });
     containerRef.current.addEventListener('click', focusInput);
     focusInput();
-  }, []);
+  });
 
   const toggleMute = () => setMute(!mute);
 
   const handleRightAnswer = () =>
   {
     if (!missed)
-      decreaseWeight(kana);
+      data.decreaseWeight(kana);
 
-    setKana(getRandomKana());
+    setKana(getRandomKana(questions));
     setMissed(false);
     setInput('');
   };
@@ -95,7 +58,7 @@ export default function KanaQuiz()
   const handleWrongAnswer = () =>
   {
     if (!missed)
-      increaseWeight(kana);
+      data.increaseWeight(kana);
 
     if (!mute)
       pronunciation.play();
@@ -139,7 +102,7 @@ export default function KanaQuiz()
           { mute ? 'volume_off' : 'volume_up' }
         </Icon>
       </IconButton>
-      <div className="prompt">{kana}</div>
+      <div key={kana} className="prompt">{kana}</div>
       <input 
         className="answer"
         type="text"
@@ -151,4 +114,56 @@ export default function KanaQuiz()
       />
     </div>
   )
+}
+
+function QuizSelect({ setQuestions })
+{
+  const selectFullPractice = () => setQuestions(Object.keys(romanizations));
+  const selectHiraganaPractice = () => setQuestions(Object.keys(romanizations).slice(0, 107));
+  const selectKatakanaPractice = () => setQuestions(Object.keys(romanizations).slice(107, 214));
+  const selectErrorPractice = () => {
+    const weights = Object.entries(data.loadWeights());
+    weights.sort((a, b) => b[1] - a[1]);
+    setQuestions(weights.slice(0, 10).map(entry => entry[0]));
+  };
+
+  return (
+    <div className="quizSelect">
+      <h1>Practice Menu</h1>
+      <Button 
+        variant="contained"
+        onClick={selectFullPractice}
+      >
+        Full Practice
+      </Button>
+      <Button 
+        variant="contained"
+        onClick={selectHiraganaPractice}
+      >
+        Hiragana Practice
+      </Button>
+      <Button 
+        variant="contained"
+        onClick={selectKatakanaPractice}
+      >
+        Katakana Practice
+      </Button>
+      <Button 
+        variant="contained"
+        onClick={selectErrorPractice}
+      >
+        Mistake Practice
+      </Button>
+    </div>
+  )
+}
+
+export default function KanaQuiz()
+{
+  const [questions, setQuestions] = useState([]);
+
+  if (questions.length === 0)
+    return <QuizSelect setQuestions={setQuestions} />
+
+  return <Quiz questions={questions} />
 }
